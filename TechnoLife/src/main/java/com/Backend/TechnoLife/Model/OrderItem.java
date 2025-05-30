@@ -65,4 +65,8 @@ public class OrderItem {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 }

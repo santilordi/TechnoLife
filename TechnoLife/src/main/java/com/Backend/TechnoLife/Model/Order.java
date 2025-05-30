@@ -1,11 +1,13 @@
 package com.Backend.TechnoLife.Model;
 
 import jakarta.persistence.*;
+
+import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
 
 @Entity
-@Table(name = "orders") // cambiado a "orders" porque "order" es palabra reservada en SQL
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +32,8 @@ public class Order {
     }
 
     public Order(Client client) {
+        this();
         this.client = client;
-        this.status = OrderStatus.PENDING;
-        this.totalAmount = 0.0;
     }
 
     // Getters y setters
@@ -54,6 +55,15 @@ public class Order {
 
     public Set<OrderItem> getItems() {
         return items;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+
+    public void setTotal(double v) {
+        this.totalAmount = v;
     }
 }
 
