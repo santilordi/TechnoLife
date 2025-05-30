@@ -61,14 +61,12 @@ public class Order {
         this.client = client;
     }
 
+    public Double getTotal(){
+        return totalAmount;
+    }
 
     public void setTotal(double v) {
         this.totalAmount = v;
     }
 }
 
-public enum OrderStatus {
-    PENDING,
-    COMPLETED,
-    CANCELLED
-}

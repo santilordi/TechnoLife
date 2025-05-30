@@ -124,4 +124,20 @@ public class OrderService {
             throw new IllegalStateException("No se puede cancelar una orden que no está pendiente");
         }
     }
+
+    @Transactional
+    public void deleteOrder (Long orderID) throws OrderException {
+        Order order = repoOrder.findById(orderID)
+                .orElseThrow(() -> new OrderException("Orden no encontrada"));
+
+        for (OrderItem item : order.getItems()){
+            Product product = item.getProduct();
+            if (product != null && item.getQuantity() != null){
+                product.setStock(product.getStock() + item.getQuantity());
+                repoProduct.save(product);
+            }
+        }
+
+        repoOrder.delete(order);
+    }
 }
