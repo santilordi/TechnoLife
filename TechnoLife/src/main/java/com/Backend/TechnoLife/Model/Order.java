@@ -67,7 +67,7 @@ public class Order {
     }
 }
 
-enum OrderStatus {
+public enum OrderStatus {
     PENDING,
     COMPLETED,
     CANCELLED

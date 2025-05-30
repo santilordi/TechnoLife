@@ -69,4 +69,8 @@ public class OrderItem {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+    public Product getProduct() {
+        return product;
+    }
 }

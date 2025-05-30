@@ -23,7 +23,7 @@ public class ClientService {
         return repoClient.findAll();
     }
 
-    public Client obtenerClientById(int id){
+    public Client obtenerClientById(Long id){
         return repoClient.findById(id).orElse(null);
     }
 
@@ -31,7 +31,7 @@ public class ClientService {
         return repoClient.save(client);
     }
 
-    public Client actualizarClient (int id, Client datos){
+    public Client actualizarClient (Long id, Client datos){
         Client c = obtenerClientById(id);
         if (c != null){
             c.setName(datos.getName());
