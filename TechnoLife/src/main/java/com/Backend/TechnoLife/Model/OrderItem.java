@@ -13,15 +13,24 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    // Aquí puedes agregar otros campos como:
+    @Column(nullable = false)
     private Integer quantity;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private Double price;
+
+    // Relación Many-to-One con Product (el producto que se compró)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     //Contructor
-    public OrderItem(Product product, Integer quantity) {
+    public OrderItem() {}
+
+    public OrderItem(Product product, Integer quantity, Double priceAtPurchase) {
         this.product = product;
         this.quantity = quantity;
+        this.price = priceAtPurchase;
     }
     
     // Getters y setters

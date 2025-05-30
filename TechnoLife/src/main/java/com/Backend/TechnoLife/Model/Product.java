@@ -26,8 +26,7 @@ public abstract class Product {
 
     }
 
-    public Product(Long id, String name, Double price, int stock) {
-        this.id = id;
+    public Product( String name, Double price, int stock) {
         this.name = name;
         this.price = price;
         this.stock = stock;

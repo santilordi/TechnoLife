@@ -11,21 +11,28 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<OrderItem> items = new HashSet<>();
 
-    // Métodos helper
-    public void addItem(OrderItem item) {
-        items.add(item);
-        item.setOrder(this);
+    @Column(nullable = false, precision = 10, scale = 2)
+    private Double totalAmount;
+
+    public Order() {
+        this.status = OrderStatus.PENDING;
+        this.totalAmount = 0.0;
     }
 
-    public void removeItem(OrderItem item) {
-        items.remove(item);
-        item.setOrder(null);
+    public Order(Client client) {
+        this.client = client;
+        this.status = OrderStatus.PENDING;
+        this.totalAmount = 0.0;
     }
 
     // Getters y setters

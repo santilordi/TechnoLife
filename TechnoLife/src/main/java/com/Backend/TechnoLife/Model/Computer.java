@@ -19,11 +19,16 @@ public class Computer extends Product {
     @Column(name = "graphics_card")
     private String graphicsCard;
 
-    public Computer(Long id, String name, Double price, int stock) {
-        super(id, name, price, stock);
+
+    //Constructor
+    public Computer(){
     }
 
-    // Getters y setters para los nuevos campos
+    public Computer(Long id, String name, Double price, int stock) {
+        super(name, price, stock);
+    }
+
+    // Getters y setters
     public String getProcessor() {
         return processor;
     }

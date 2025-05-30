@@ -21,7 +21,7 @@ public class Phone extends Product {
     }
 
     public Phone(Long id, String name, Double price, int stock) {
-        super(id, name, price, stock);
+        super( name, price, stock);
     }
 
     public Double getScreenSize() {

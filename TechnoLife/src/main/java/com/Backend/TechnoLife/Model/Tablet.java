@@ -14,22 +14,14 @@ public class Tablet extends Product {
     private String ram;
 
     public Tablet() {
-        // Constructor vacío necesario para JPA
+
     }
 
-    public Tablet(Long id, String name, Double price, int stock) {
-        super(id, name, price, stock);
+    public Tablet(String name, Double price, int stock) {
+        super(name, price, stock);
     }
 
-    // Constructor con todos los campos
-    public Tablet(Long id, String name, Double price, int stock,
-                 Double screenSize, String storage, String ram,
-                 String batteryCapacity, String operatingSystem,
-                 Boolean hasCellular) {
-        super(id, name, price, stock);
-        this.screenSize = screenSize;
-        this.ram = ram;
-    }
+
 
     // Getters y Setters
     public Double getScreenSize() {
