@@ -53,7 +53,7 @@ public class OrderService {
                 .orElseThrow(() -> new CustomerNotFoundException("Cliente no encontrado con ID: " + clientId));
 
         // Obtener items del carrito del cliente
-        List<ShoppingCartItem> cartItems = repoCart.findByCLient(client);
+        List<ShoppingCartItem> cartItems = repoCart.findByClient(client);
 
         if (cartItems.isEmpty()) {
             throw new EmptyOrderException();

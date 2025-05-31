@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCartItem, Integer> {
-    List<ShoppingCartItem> findByCLient (Client client);
+    List<ShoppingCartItem> findByClient (Client client);
 
     Optional<ShoppingCartItem> findByClientAndProduct(Client client, Product product);
 

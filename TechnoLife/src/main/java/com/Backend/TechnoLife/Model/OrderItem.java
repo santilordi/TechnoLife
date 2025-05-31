@@ -16,7 +16,7 @@ public class OrderItem {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private Double price;
 
     // Relación Many-to-One con Product (el producto que se compró)

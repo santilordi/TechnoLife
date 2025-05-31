@@ -27,7 +27,7 @@ public class OrderController {
     }
 
 
-    @GetMapping
+    @GetMapping("/client")
     public ResponseEntity<List<Order>> listarTodasOrdenes(){
         //Aca se pondria logica de seguridad apra solo permitir ADMINS
         //. . .

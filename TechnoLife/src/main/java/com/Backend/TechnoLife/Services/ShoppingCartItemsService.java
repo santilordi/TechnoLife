@@ -58,7 +58,7 @@ public class ShoppingCartItemsService {
 
     // Obtener todos los items del carrito de un cliente
     public List<ShoppingCartItem> getCartItems(Client client) {
-        return repoShopCartItm.findByCLient(client);
+        return repoShopCartItm.findByClient(client);
     }
 
     // Actualizar cantidad de un item
