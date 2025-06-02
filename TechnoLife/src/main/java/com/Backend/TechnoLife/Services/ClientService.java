@@ -29,8 +29,16 @@ public class ClientService {
         return repoClient.findById(id).orElse(null);
     }
 
+    public Client obtenerClientPorEmail(String email) {
+        return (Client) repoClient.findByEmail(email).orElse(null);
+    }
+
+
     @Transactional
     public Client guardarClient (Client client){
+        if (client.getRol() == null || client.getRol().equals(ClientStatus.Cliente)) {
+            client.setRol(ClientStatus.Cliente);
+        }
         return repoClient.save(client);
     }
 

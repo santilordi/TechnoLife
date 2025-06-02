@@ -60,4 +60,15 @@ public class ClientController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Acceso denegado. No sos administrador.");
         }
     }
+
+    // Iniciar sesión por email (retorna el cliente)
+    @GetMapping("/login")
+    public ResponseEntity<Client> login(@RequestParam String email) {
+        Client cliente = clientService.obtenerClientPorEmail(email);
+        if (cliente != null) {
+            return ResponseEntity.ok(cliente);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }
