@@ -1,5 +1,8 @@
 package com.Backend.TechnoLife.Services;
 
+import com.Backend.TechnoLife.Dto.OrderDto;
+import com.Backend.TechnoLife.Dto.OrderItemDto;
+import com.Backend.TechnoLife.Dto.ProductDto;
 import com.Backend.TechnoLife.Exception.CustomerNotFoundException;
 import com.Backend.TechnoLife.Exception.EmptyOrderException;
 import com.Backend.TechnoLife.Exception.OrderException;
@@ -12,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,58 +51,34 @@ public class OrderService {
     }
 
     @Transactional
-    public Order createOrderFromShoppingCart(Long clientId) throws CustomerNotFoundException, EmptyOrderException {
-        // Obtener cliente
-        Client client = repoClient.findById((clientId))
-                .orElseThrow(() -> new CustomerNotFoundException("Cliente no encontrado con ID: " + clientId));
-
-        // Obtener items del carrito del cliente
-        List<ShoppingCartItem> cartItems = repoCart.findByClient(client);
-
-        if (cartItems.isEmpty()) {
-            throw new EmptyOrderException();
-        }
-
-        Order newOrder = new Order(client);
-        double total = 0.0;
-
-        // Convertir ShoppingCartItems a OrderItems
-        for (ShoppingCartItem cartItem : cartItems) {
-            Product product = cartItem.getProduct();
-            Integer quantity = cartItem.getQuantity();
-
-            // Verificar stock
-            if (product.getStock() < quantity) {
-                throw new IllegalStateException("Stock insuficiente para el producto: " + product.getName() +
-                        ". Disponible: " + product.getStock() + 
-                        ", Solicitado: " + quantity);
+    public Order createOrderFromShoppingCart(OrderDto orderDto) throws CustomerNotFoundException, EmptyOrderException {
+        // Ejemplo básico:
+        Order order = new Order();
+        List<OrderItem> items = new ArrayList<>();
+        Double total = 0.0;
+        for (OrderItemDto prod : orderDto.getProductos()) {
+            Product producto = repoProduct.findById(prod.getId()).orElse(null);
+            if (producto == null) {
+                throw new RuntimeException("Producto no encontrado: " + prod.getNombre());
+            }
+            if (producto.getStock() < prod.getCantidad()) {
+                throw new RuntimeException("Stock insuficiente para " + producto.getName());
             }
 
-            // Crear OrderItem
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrder(newOrder);
-            orderItem.setProduct(product);
-            orderItem.setQuantity(quantity);
-            orderItem.setPrice(product.getPrice());
-            newOrder.getItems().add(orderItem);
+            total += producto.getPrice() * prod.getCantidad();
+            producto.setStock(producto.getStock() - prod.getCantidad());
+            repoProduct.save(producto);
 
-            // Actualizar stock
-            product.setStock(product.getStock() - quantity);
-            repoProduct.save(product);
-
-            // Actualizar total
-            total += product.getPrice() * quantity;
+            OrderItem item = new OrderItem();
+            item.setProduct(producto);
+            item.setQuantity(prod.getCantidad());
+            item.setPrice(producto.getPrice());
+            items.add(item);
         }
-
-        newOrder.setTotal(total);
-        
-        // Guardar orden
-        Order savedOrder = repoOrder.save(newOrder);
-
-        // Limpiar carrito
-        repoCart.deleteByClient(client);
-
-        return savedOrder;
+        order.setItems(items);
+        order.setStatus(OrderStatus.PENDING);
+        order.setTotal(total);
+        return repoOrder.save(order);
     }
 
     @Transactional

@@ -3,9 +3,7 @@ package com.Backend.TechnoLife.Model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -15,14 +13,14 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = true)
     private Client client;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderItem> items = new HashSet<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     @Column(nullable = false)
     private Double totalAmount;
@@ -54,8 +52,12 @@ public class Order {
         this.status = status;
     }
 
-    public Set<OrderItem> getItems() {
+    public List<OrderItem> getItems() {
         return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 
     public void setClient(Client client) {

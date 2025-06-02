@@ -30,15 +30,13 @@ public class OrderController {
 
     @GetMapping("/client")
     public ResponseEntity<List<Order>> listarTodasOrdenes(){
-        //Aca se pondria logica de seguridad apra solo permitir ADMINS
-        //. . .
+
         return ResponseEntity.ok(orderService.obtenerOrdenes());
     }
 
     @GetMapping("/client/{clientId}")
     public ResponseEntity<List<Order>> listarOrdenesPorCliente(@PathVariable Long id){
-        //Aca se pondria logica de seguridad apra solo permitir ADMINS
-        //. . .
+
         return ResponseEntity.ok(orderService.obtenerClientOrders(id));
     }
 
@@ -55,22 +53,14 @@ public class OrderController {
 
 
     //Crear orden desde el carrito de compras
-    @PostMapping("/create-from-cart/{clientId}")
-    public ResponseEntity<Order> crearOrdenDesdeCarrito (@PathVariable Long clientId){
+    @PostMapping("/save")
+    public ResponseEntity<OrderDto> crearOrdenDesdeCarrito (@RequestBody OrderDto orderDto){
         try {
-            Order newOrder = orderService.createOrderFromShoppingCart(clientId);
-            //Devuelve 201 Created si la orden se crea exitosamente
-            return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
-        } catch (CustomerNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
-        } catch (EmptyOrderException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El carrito de compras está vacío.", e);
-        } catch (IllegalStateException e) {
-            // Para errores de stock insuficiente
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage(), e); // 409 Conflict
+            Order nuevaOrden = orderService.createOrderFromShoppingCart(orderDto);
+            return new ResponseEntity<>(new OrderDto(nuevaOrden), HttpStatus.CREATED);
         } catch (Exception e) {
-            // Captura cualquier otra excepción inesperada
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear la orden: " + e.getMessage(), e);
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error al crear el pedido: " + e.getMessage(), e);
         }
     }
 

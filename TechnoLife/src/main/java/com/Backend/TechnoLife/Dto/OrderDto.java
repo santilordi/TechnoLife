@@ -21,6 +21,38 @@ public class OrderDto {
                 .collect(Collectors.toList());
     }
 
-    // Getters si vas a usar con @RestController
+    public OrderDto() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public List<OrderItemDto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<OrderItemDto> productos) {
+        this.productos = productos;
+    }
 }
 
