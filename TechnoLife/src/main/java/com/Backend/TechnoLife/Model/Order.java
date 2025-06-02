@@ -2,6 +2,7 @@ package com.Backend.TechnoLife.Model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 import java.util.HashSet;
@@ -68,5 +69,6 @@ public class Order {
     public void setTotal(double v) {
         this.totalAmount = v;
     }
+
 }
 

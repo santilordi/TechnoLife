@@ -1,5 +1,6 @@
 package com.Backend.TechnoLife.Controller;
 
+import com.Backend.TechnoLife.Dto.OrderDto;
 import com.Backend.TechnoLife.Exception.CustomerNotFoundException;
 import com.Backend.TechnoLife.Exception.EmptyOrderException;
 import com.Backend.TechnoLife.Exception.OrderException;
@@ -110,5 +111,14 @@ public class OrderController {
         } catch (Exception e){
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al eliminar la orden: " + e.getMessage(), e);
         }
+    }
+
+    @GetMapping("/dto")
+    public ResponseEntity<List<OrderDto>> obtenerHistorialPedidosDTO() {
+        List<Order> pedidos = orderService.obtenerOrdenes();
+        List<OrderDto> pedidosDTO = pedidos.stream()
+                .map(OrderDto::new)
+                .toList();
+        return ResponseEntity.ok(pedidosDTO);
     }
 }
