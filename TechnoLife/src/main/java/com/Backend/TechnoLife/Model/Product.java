@@ -1,32 +1,47 @@
 package com.Backend.TechnoLife.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "products")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Product {
+public class Product {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-    
+
+    @JsonProperty("nombre")
     @Column(nullable = false)
     protected String name;
-    
+
+    @JsonProperty("precio")
     @Column(nullable = false)
     protected Double price;
-    
+
+    @JsonProperty("descripcion")
     @Column(length = 1000)
     protected String description;
-    
+
+    @JsonProperty("stock")
     @Column(nullable = false)
     protected int stock;
+
+    @JsonProperty("categoria")
+    @Column(nullable = false)
+    protected String category;
+
+    @JsonProperty("imagen")
+    @Column(length = 1000)
+    protected String image;
 
     public Product() {
 
     }
 
-    public Product( String name, Double price, int stock) {
+    public Product( String name, Double price, int stock, String category, String image) {
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -71,5 +86,21 @@ public abstract class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
