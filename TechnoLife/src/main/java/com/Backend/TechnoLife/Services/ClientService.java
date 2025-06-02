@@ -1,8 +1,6 @@
 package com.Backend.TechnoLife.Services;
 
 import com.Backend.TechnoLife.Model.Client;
-import com.Backend.TechnoLife.Model.ClientStatus;
-import com.Backend.TechnoLife.Model.Product;
 import com.Backend.TechnoLife.Repositories.ClientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +34,10 @@ public class ClientService {
 
     @Transactional
     public Client guardarClient (Client client){
-        if (client.getRol() == null || client.getRol().equals(ClientStatus.Cliente)) {
-            client.setRol(ClientStatus.Cliente);
-        }
         return repoClient.save(client);
     }
 
+    @Transactional
     public Client actualizarClient (Long id, Client datos){
         Client c = obtenerClientById(id);
         if (c != null){
@@ -51,11 +47,6 @@ public class ClientService {
             return repoClient.save(c);
         }
         return null;
-    }
-
-    public boolean esAdmin(Long clientId) {
-        Client c = obtenerClientById(clientId);
-        return c != null && c.getRol() == ClientStatus.ADMIN;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.Backend.TechnoLife.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,26 +10,30 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("nombre")
     @Column(nullable = false)
     private String name;
 
+    @JsonProperty("apellido")
     @Column(nullable = false)
     private String lastName;
 
+    @JsonProperty("email")
     @Column(nullable = false)
     private String email;
 
+    @JsonProperty("password")
     @Column(nullable = false)
-    private ClientStatus rol;
+    private String password;
 
     public Client() {}
 
-    public Client(Long id, String name, String lastName, String email, ClientStatus rol) {
+    public Client(Long id, String name, String lastName, String email, String password) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
-        this.rol = rol;
+        this.password = password;
     }
 
     public Long getId() {
@@ -63,11 +68,12 @@ public class Client {
         this.email = email;
     }
 
-    public ClientStatus getRol() {
-        return rol;
+
+    public String getPassword() {
+        return password;
     }
 
-    public void setRol(ClientStatus rol) {
-        this.rol = rol;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
