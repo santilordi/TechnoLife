@@ -1,8 +1,10 @@
 package com.Backend.TechnoLife.Services;
 
 import com.Backend.TechnoLife.Model.Client;
+import com.Backend.TechnoLife.Model.ClientStatus;
 import com.Backend.TechnoLife.Model.Product;
 import com.Backend.TechnoLife.Repositories.ClientRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,7 @@ public class ClientService {
         return repoClient.findById(id).orElse(null);
     }
 
+    @Transactional
     public Client guardarClient (Client client){
         return repoClient.save(client);
     }
@@ -41,4 +44,10 @@ public class ClientService {
         }
         return null;
     }
+
+    public boolean esAdmin(Long clientId) {
+        Client c = obtenerClientById(clientId);
+        return c != null && c.getRol() == ClientStatus.ADMIN;
+    }
+
 }

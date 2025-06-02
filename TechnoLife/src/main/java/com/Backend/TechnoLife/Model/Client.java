@@ -18,13 +18,17 @@ public class Client {
     @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
+    private ClientStatus rol;
+
     public Client() {}
 
-    public Client(Long id, String name, String lastName, String email) {
+    public Client(Long id, String name, String lastName, String email, ClientStatus rol) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.rol = rol;
     }
 
     public Long getId() {
@@ -57,5 +61,13 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public ClientStatus getRol() {
+        return rol;
+    }
+
+    public void setRol(ClientStatus rol) {
+        this.rol = rol;
     }
 }
