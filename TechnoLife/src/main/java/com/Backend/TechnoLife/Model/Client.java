@@ -26,14 +26,21 @@ public class Client {
     @Column(nullable = false)
     private String password;
 
+    @JsonProperty("rol")
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private ClientStatus rol;
+
     public Client() {}
 
-    public Client(Long id, String name, String lastName, String email, String password) {
+    public Client(Long id, String name, String lastName, String email, String password, ClientStatus rol) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.rol = rol;
+
     }
 
     public Long getId() {
@@ -75,5 +82,13 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ClientStatus getRol() {
+        return rol;
+    }
+
+    public void setRol(ClientStatus rol) {
+        this.rol = rol;
     }
 }

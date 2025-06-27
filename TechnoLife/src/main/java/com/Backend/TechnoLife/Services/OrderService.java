@@ -52,10 +52,18 @@ public class OrderService {
 
     @Transactional
     public Order createOrderFromShoppingCart(OrderDto orderDto) throws CustomerNotFoundException, EmptyOrderException {
-        // Ejemplo básico:
         Order order = new Order();
         List<OrderItem> items = new ArrayList<>();
         Double total = 0.0;
+
+        // Busca el cliente por email
+        if (orderDto.getClient() == null || orderDto.getClient().getEmail() == null) {
+            throw new CustomerNotFoundException("No se especificó el cliente");
+        }
+        Client cliente = (Client) repoClient.findByEmail(orderDto.getClient().getEmail())
+                .orElseThrow(() -> new CustomerNotFoundException("Cliente no encontrado"));
+        order.setClient(cliente); // <--- ASIGNA EL CLIENTE
+
         for (OrderItemDto prod : orderDto.getProductos()) {
             Product producto = repoProduct.findById(prod.getId()).orElse(null);
             if (producto == null) {

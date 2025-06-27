@@ -1,5 +1,6 @@
 package com.Backend.TechnoLife.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id", nullable = true)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @Enumerated(EnumType.STRING)
@@ -72,5 +73,8 @@ public class Order {
         this.totalAmount = v;
     }
 
+    public Client getClient() {
+        return client;
+    }
 }
 

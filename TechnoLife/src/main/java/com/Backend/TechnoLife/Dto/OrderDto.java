@@ -1,6 +1,8 @@
 package com.Backend.TechnoLife.Dto;
 
+import com.Backend.TechnoLife.Model.Client;
 import com.Backend.TechnoLife.Model.Order;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +14,9 @@ public class OrderDto {
     private Double total;
     private List<OrderItemDto> productos;
 
+    @JsonProperty("client")
+    private ClientDto client;
+
     public OrderDto(Order order) {
         this.id = order.getId();
         this.estado = order.getStatus().name(); // Enum a texto
@@ -19,6 +24,7 @@ public class OrderDto {
         this.productos = order.getItems().stream()
                 .map(OrderItemDto::new)
                 .collect(Collectors.toList());
+        this.client = order.getClient() != null ? new ClientDto(order.getClient()) : null;
     }
 
     public OrderDto() {}
@@ -53,6 +59,14 @@ public class OrderDto {
 
     public void setProductos(List<OrderItemDto> productos) {
         this.productos = productos;
+    }
+
+    public ClientDto getClient() {
+        return client;
+    }
+
+    public void setClient(ClientDto client) {
+        this.client = client;
     }
 }
 
