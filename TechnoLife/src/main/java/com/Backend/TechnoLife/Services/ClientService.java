@@ -1,6 +1,7 @@
 package com.Backend.TechnoLife.Services;
 
 import com.Backend.TechnoLife.Model.Client;
+import com.Backend.TechnoLife.Model.ClientStatus;
 import com.Backend.TechnoLife.Repositories.ClientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class ClientService {
 
     @Transactional
     public Client guardarClient (Client client){
+        if (client.getRol() == null) {
+            client.setRol(ClientStatus.USUARIO);
+        }
         return repoClient.save(client);
     }
 

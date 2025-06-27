@@ -9,6 +9,8 @@ public class ClientDto {
     private String email;
     private String rol;
 
+    public ClientDto (){}
+
     public ClientDto(Client client) {
         this.id = client.getId();
         this.nombre = client.getName();

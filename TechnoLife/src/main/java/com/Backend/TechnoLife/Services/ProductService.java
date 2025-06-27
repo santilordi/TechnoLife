@@ -25,7 +25,6 @@ public class ProductService {
         dto.setDescripcion(product.getDescription());
         dto.setPrecio(product.getPrice());
         dto.setCategoria(product.getCategory());
-        dto.setImagen(product.getImage());
         dto.setStock(product.getStock());
         return dto;
     }
@@ -38,7 +37,6 @@ public class ProductService {
         product.setDescription(dto.getDescripcion());
         product.setPrice(dto.getPrecio());
         product.setCategory(dto.getCategoria());
-        product.setImage(dto.getImagen());
         product.setStock(dto.getStock());
         return product;
     }

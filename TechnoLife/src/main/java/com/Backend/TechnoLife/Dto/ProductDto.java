@@ -6,7 +6,6 @@ public class ProductDto {
     private String descripcion;
     private Double precio;
     private String categoria;
-    private String imagen;
     private int stock;
 
     public ProductDto() {}
@@ -17,7 +16,6 @@ public class ProductDto {
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
-        this.imagen = imagen;
         this.stock = stock;
     }
 
@@ -36,9 +34,6 @@ public class ProductDto {
 
     public String getCategoria() { return categoria; }
     public void setCategoria(String categoria) { this.categoria = categoria; }
-
-    public String getImagen() { return imagen; }
-    public void setImagen(String imagen) { this.imagen = imagen; }
 
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
