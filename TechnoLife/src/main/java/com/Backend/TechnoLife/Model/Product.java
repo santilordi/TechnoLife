@@ -33,15 +33,11 @@ public class Product {
     @Column(nullable = false)
     protected String category;
 
-    @JsonProperty("imagen")
-    @Column(length = 1000)
-    protected String image;
-
     public Product() {
 
     }
 
-    public Product( String name, Double price, int stock, String category, String image) {
+    public Product( String name, Double price, int stock, String category) {
         this.name = name;
         this.price = price;
         this.stock = stock;
@@ -94,13 +90,5 @@ public class Product {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 }
