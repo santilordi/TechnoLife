@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,5 +52,33 @@ public class ProductService {
         Product product = toEntity(dto);
         Product saved = productRepository.save(product);
         return toDTO(saved);
+    }
+
+    // Actualizar producto
+    public ProductDto updateProduct(Long id, ProductDto dto) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            // Actualizar los campos
+            product.setName(dto.getNombre());
+            product.setDescription(dto.getDescripcion());
+            product.setPrice(dto.getPrecio());
+            product.setCategory(dto.getCategoria());
+            product.setStock(dto.getStock());
+
+            Product updated = productRepository.save(product);
+            return toDTO(updated);
+        } else {
+            throw new RuntimeException("Producto no encontrado con id: " + id);
+        }
+    }
+
+    // Eliminar producto
+    public void deleteProduct(Long id) {
+        if (productRepository.existsById(id)) {
+            productRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Producto no encontrado con id: " + id);
+        }
     }
 }
