@@ -1,5 +1,10 @@
 package com.Backend.TechnoLife.Dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class LoginDto {
     public String email;
     public String password;
@@ -12,27 +17,4 @@ public class LoginDto {
         this.rol = rol;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public String getRol() {
-        return rol;
-    }
 }

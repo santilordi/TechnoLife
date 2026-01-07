@@ -3,10 +3,17 @@ package com.Backend.TechnoLife.Dto;
 import com.Backend.TechnoLife.Model.Client;
 import com.Backend.TechnoLife.Model.Order;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 public class OrderDto {
     private Long id;
@@ -27,46 +34,5 @@ public class OrderDto {
         this.client = order.getClient() != null ? new ClientDto(order.getClient()) : null;
     }
 
-    public OrderDto() {}
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public List<OrderItemDto> getProductos() {
-        return productos;
-    }
-
-    public void setProductos(List<OrderItemDto> productos) {
-        this.productos = productos;
-    }
-
-    public ClientDto getClient() {
-        return client;
-    }
-
-    public void setClient(ClientDto client) {
-        this.client = client;
-    }
 }
 

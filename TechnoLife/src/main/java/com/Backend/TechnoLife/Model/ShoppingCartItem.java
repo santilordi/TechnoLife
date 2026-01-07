@@ -1,8 +1,14 @@
 package com.Backend.TechnoLife.Model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
+@NoArgsConstructor
 @Table(name = "shopping_cart_items")
 public class ShoppingCartItem {
 
@@ -21,9 +27,6 @@ public class ShoppingCartItem {
     @Column(nullable = false)
     private Integer quantity;
 
-    public ShoppingCartItem(){
-
-    }
 
     public ShoppingCartItem(Client client, Product product, Integer quantity) {
         this();
@@ -32,35 +35,4 @@ public class ShoppingCartItem {
         this.quantity = quantity;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
 }

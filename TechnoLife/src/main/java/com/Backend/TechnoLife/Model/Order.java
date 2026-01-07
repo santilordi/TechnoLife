@@ -2,13 +2,19 @@ package com.Backend.TechnoLife.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "orders")
 public class Order {
+    // Getters y setters
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,35 +42,6 @@ public class Order {
         this.client = client;
     }
 
-    // Getters y setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public List<OrderItem> getItems() {
-        return items;
-    }
-
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
     public Double getTotal(){
         return totalAmount;
     }
@@ -73,8 +50,5 @@ public class Order {
         this.totalAmount = v;
     }
 
-    public Client getClient() {
-        return client;
-    }
 }
 

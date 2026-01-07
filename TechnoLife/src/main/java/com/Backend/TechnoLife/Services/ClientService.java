@@ -1,8 +1,10 @@
 package com.Backend.TechnoLife.Services;
 
+import com.Backend.TechnoLife.Dto.ClientDto;
 import com.Backend.TechnoLife.Model.Client;
 import com.Backend.TechnoLife.Model.ClientStatus;
 import com.Backend.TechnoLife.Repositories.ClientRepository;
+import com.Backend.TechnoLife.mappers.ClientMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,45 +14,66 @@ import java.util.List;
 @Service
 public class ClientService {
 
-    private ClientRepository repoClient;
+    private final ClientRepository repoClient;
+    private final ClientMapper clientMapper;
 
     @Autowired
-    public ClientService(ClientRepository repoClient) {
+    public ClientService(ClientRepository repoClient, ClientMapper clientMapper) {
         this.repoClient = repoClient;
+        this.clientMapper = clientMapper;
     }
 
-    //CRUD
-    public List<Client> obtenerClients(){
-        return repoClient.findAll();
+    // =====================
+    // DTO METHODS (Controller)
+    // =====================
+
+    public List<ClientDto> obtenerClients() {
+        return repoClient.findAll()
+                .stream()
+                .map(clientMapper::toDto)
+                .toList();
     }
 
-    public Client obtenerClientById(Long id){
+    public ClientDto obtenerClientById(Long id) {
+        return repoClient.findById(id)
+                .map(clientMapper::toDto)
+                .orElse(null);
+    }
+
+    // =====================
+    // ENTITY METHODS (Business / Security)
+    // =====================
+
+    public Client obtenerClientEntityById(Long id) {
         return repoClient.findById(id).orElse(null);
     }
 
     public Client obtenerClientPorEmail(String email) {
-        return (Client) repoClient.findByEmail(email).orElse(null);
+        return repoClient.findByEmail(email).orElse(null);
     }
 
+    // =====================
+    // WRITE
+    // =====================
 
     @Transactional
-    public Client guardarClient (Client client){
+    public ClientDto guardarClient(Client client) {
         if (client.getRol() == null) {
             client.setRol(ClientStatus.USUARIO);
         }
-        return repoClient.save(client);
+        Client saved = repoClient.save(client);
+        return clientMapper.toDto(saved);
     }
 
     @Transactional
-    public Client actualizarClient (Long id, Client datos){
-        Client c = obtenerClientById(id);
-        if (c != null){
-            c.setName(datos.getName());
-            c.setLastName(datos.getLastName());
-            c.setEmail(datos.getEmail());
-            return repoClient.save(c);
-        }
-        return null;
-    }
+    public ClientDto actualizarClient(Long id, Client datos) {
+        Client entity = repoClient.findById(id).orElse(null);
+        if (entity == null) return null;
 
+        entity.setName(datos.getName());
+        entity.setLastName(datos.getLastName());
+        entity.setEmail(datos.getEmail());
+
+        return clientMapper.toDto(repoClient.save(entity));
+    }
 }
